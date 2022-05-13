@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/Mohamedfadah/booking-mern-app#readme",
   "dependencies": {
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "mongoose": "^6.3.3",
     "nodemon": "^2.0.16"
   }
 }
