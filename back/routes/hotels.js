@@ -1,5 +1,6 @@
 import express from "express"
 import Hotel from "../models/Hotel.js"
+import { createError } from "../utils/error.js"
 
 const router = express.Router()
 
@@ -38,21 +39,21 @@ router.delete("/:id", async (req, res) => {
     }
 })
 // TODO::GET
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
     try {
         const hotel = await Hotel.findById(req.params.id)
         res.status(201).json(hotel)
     } catch (error) {
-        res.status(500).json(error)
+        next(error)
     }
 })
 // TODO::GET ALL
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
     try {
         const hotels = await Hotel.find()
         res.status(201).json(hotels)
     } catch (error) {
-        res.status(500).json(error)
+        next(error)
     }
 })
 
