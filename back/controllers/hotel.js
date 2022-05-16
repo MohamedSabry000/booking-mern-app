@@ -40,8 +40,9 @@ export const getHotel = async (req, res, next) => {
 
 // TODO::GET ALL HOTEL CONTROLLER
 export const getAllHotels = async (req, res, next) => {
+    const {min, max, limit, ...others} = req.query
     try {
-        const hotels = await Hotel.find()
+        const hotels = await Hotel.find({...others, cheapestPrice:{$gt: min || 1, $lt: max || 9999}}).limit(limit)
         res.status(201).json(hotels)
     } catch (error) { next(error) }
 }
@@ -57,8 +58,18 @@ export const countByCity = async (req, res, next) => {
 
 // TODO::COUNT HOTELS BY TYPE CONTROLLER
 export const countByType = async (req, res, next) => {
-    try {
-        const hotels = await Hotel.find()
-        res.status(201).json(hotels)
+    try {    
+        const hotelCount = await Hotel.countDocuments({ type: "hotel" })
+        const apartmentCount = await Hotel.countDocuments({ type: "apartment" })
+        const resortCount = await Hotel.countDocuments({ type: "resort" })
+        const villaCount = await Hotel.countDocuments({ type: "villa" })
+        const chaletCount = await Hotel.countDocuments({ type: "chalet" })
+        res.status(201).json([
+            {type: "hotel", count: hotelCount},
+            {type: "apartments", count: apartmentCount},
+            {type: "resorts", count: resortCount},
+            {type: "villas", count: villaCount},
+            {type: "chalet", count: chaletCount},
+        ])
     } catch (error) { next(error) }
 }

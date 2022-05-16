@@ -50,6 +50,7 @@ const HotelSchema = new Schema({
         required: true
     },
     featured: {
+        default: false,
         type: Boolean,
         required: false
     },
