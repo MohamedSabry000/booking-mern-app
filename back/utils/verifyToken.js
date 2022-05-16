@@ -13,14 +13,14 @@ export const verifyToken = async (req, res, next) => {
 }
 
 export const verifyUser = async (req, res, next) => {
-    verifyToken(req, res, () => {
+    verifyToken(req, res, next, () => {
         if(req.user.id === req.params.id || req.user.isAdmin) next()
         else return next(createError(403, "You are not authenticated!"))
     })
 }
 
 export const verifyAdmin = async (req, res, next) => {
-    verifyToken(req, res, () => {
+    verifyToken(req, res, next, () => {
         if(req.user.isAdmin) next()
         else return next(createError(403, "You are not authenticated!"))
     })

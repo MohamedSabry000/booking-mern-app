@@ -45,3 +45,20 @@ export const getAllHotels = async (req, res, next) => {
         res.status(201).json(hotels)
     } catch (error) { next(error) }
 }
+
+// TODO::COUNT HOTELS BY CITY CONTROLLER
+export const countByCity = async (req, res, next) => {
+    const cities = req.query.cities.split(',')
+    try {
+        const list = await Promise.all(cities.map(city => Hotel.countDocuments({ city })))
+        res.status(201).json(list)
+    } catch (error) { next(error) }
+}
+
+// TODO::COUNT HOTELS BY TYPE CONTROLLER
+export const countByType = async (req, res, next) => {
+    try {
+        const hotels = await Hotel.find()
+        res.status(201).json(hotels)
+    } catch (error) { next(error) }
+}
