@@ -97,7 +97,7 @@ const Hotel = () => {
               </div>
             )}
             <div className="hotelWrapper">
-              <button className="bookNow">Reserve or Book Now!</button>
+              <button onClick={handleClick} className="bookNow">Reserve or Book Now!</button>
               <h1 className="hotelTitle">{data.name}</h1>
               <div className="hotelAddress">
                 <FontAwesomeIcon icon={faLocationDot} />
@@ -146,7 +146,7 @@ const Hotel = () => {
           </div>
         )
       }
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
+      {openModal && <Reserve   setOpen={setOpenModal} hotelId={id} />}
 
     </div>
   );

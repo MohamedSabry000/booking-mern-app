@@ -36,6 +36,15 @@ export const updateRoom = async (req, res, next) => {
     } catch (error) { next(error) }
 }
 
+// TODO::UPDATE ROOM AVAILABILITY CONTROLLER
+export const updateRoomAvailability = async (req, res, next) => {
+
+    try {
+        await Room.updateOne({"roomNumbers._id": req.params.id}, { $push: { "roomNumbers.$.unavailableDates": req.body.dates } }); 
+        res.status(201).json('Room status has been updated!')
+    } catch (error) { next(error) }
+}
+
 // TODO::DELETE ROOM CONTROLLER
 export const deleteRoom = async (req, res, next) => {
     const hotelId = req.params.hotelId;

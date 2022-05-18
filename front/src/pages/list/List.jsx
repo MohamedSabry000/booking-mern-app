@@ -2,10 +2,12 @@ import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
+import { SearchContext } from "../../context/SearchContext";
+
 import useFetch from "../../hooks/useFetch";
 
 const List = () => {
@@ -20,8 +22,11 @@ const List = () => {
   const [max, setMax] = useState(undefined);
 
   const { data, loading, error, reFetch } = useFetch(`/hotels?${destination&&`city=${destination}`}&${min&&`min=${min}`}&${max&&`max=${max}`}&limit=10`);
+  const {dispatch} = useContext(SearchContext);
 
   const handleClick = () => {
+    dispatch({type: "NEW_SEARCH", payload: {city:destination, dates:date, options}})
+
     reFetch();
   }
 
@@ -35,7 +40,7 @@ const List = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" value={destination} onChange={e=>setDestination(e.target.value)} />
+              <input placeholder={destination || "Your Destination"} type="text" value={destination} onChange={e=>setDestination(e.target.value)} />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -45,6 +50,8 @@ const List = () => {
               )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
               {openDate && (
                 <DateRange
+                  editableDateInputs={true}
+                  moveRangeOnFirstSelection={false}
                   onChange={(item) => setDate([item.selection])}
                   minDate={new Date()}
                   ranges={date}
