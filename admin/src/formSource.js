@@ -38,7 +38,7 @@ export const userInputs = [
   
 ];
 
-export const productInputs = [
+export const hotelInputs = [
   {
     id: "name",
     label: "Name",
@@ -90,7 +90,7 @@ export const productInputs = [
 ];
 
 
-export const roomtInputs = [
+export const roomInputs = [
   {
     id: "title",
     label: "Title",
