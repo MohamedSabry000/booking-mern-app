@@ -95,7 +95,7 @@ export const roomInputs = [
     id: "title",
     label: "Title",
     type: "text",
-    placeholder: "The best hotel",
+    placeholder: "New Room",
   },
   {
     id: "description",
